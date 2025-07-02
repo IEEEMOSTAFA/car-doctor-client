@@ -1,4 +1,5 @@
 import React from 'react';
+
 import banner1 from '../../../assets/images/banner/1.jpg';
 import banner2 from '../../../assets/images/banner/2.jpg';
 import banner3 from '../../../assets/images/banner/3.jpg';
@@ -14,16 +15,18 @@ const banners = [
   banner5,
   banner6,
 ];
-
-const Banner = () => {
-  return (
-    <div className="carousel w-full max-w-screen-xl mx-auto rounded-lg overflow-hidden mt-6 h-52 md:h-72 lg:h-96 relative bg-[#151515]">
-      {banners.map((img, idx) => (
-        <div
-          key={idx}
-          id={`slide${idx + 1}`}
-          className="carousel-item relative w-full h-full"
-        >
+const Banners = () => {
+    return (
+        <div className="carousel w-full max-w-screen-xl mx-auto rounded-lg overflow-hidden mt-6 h-52 md:h-72 lg:h-96 relative">
+           {
+            banners.map((img, idx) =>
+        //     <div
+        //   key={idx}
+        //   id={`slide${idx + 1}`}
+        //   className="carousel-item relative w-full h-full"
+        // >
+        <div key={idx} id={`slides${idx + 1}`} className=''></div>
+        
           <img
             src={img}
             className="w-full h-full object-cover"
@@ -57,33 +60,28 @@ const Banner = () => {
               <button className="btn btn-outline btn-success">Latest Project</button>
             </div>
           </div>
-
-
-
-
-        
-            {/* Carousel navigation */}
-            <div className="absolute right-4 bottom-4 flex gap-2 items-center z-10">
-              <a
-                href={`#slide${idx === 0 ? banners.length : idx}`}
-                className="btn btn-xs btn-circle"
-                aria-label="Previous Slide"
-              >
-                ❮
-              </a>
-              <a
-                href={`#slide${idx === banners.length - 1 ? 1 : idx + 2}`}
-                className="btn btn-xs btn-circle bg-orange-600"
-                aria-label="Next Slide"
-
-              >
-                ❯
-              </a>
-            </div>
+          {/* Carousel navigation */}
+          <div className="absolute right-4 bottom-4 flex gap-2 items-center z-10">
+            <a
+              href={`#slide${idx === 0 ? banners.length : idx}`}
+              className="btn btn-xs btn-circle"
+              aria-label="Previous Slide"
+            >
+              ❮
+            </a>
+            <a
+              href={`#slide${idx === banners.length - 1 ? 1 : idx + 2}`}
+              className="btn btn-xs btn-circle"
+              aria-label="Next Slide"
+            >
+              ❯
+            </a>
           </div>
-      ))}
         </div>
-      );
+            
+           )} 
+        </div>
+    );
 };
 
-      export default Banner;
+export default Banners;

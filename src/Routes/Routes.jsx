@@ -5,6 +5,7 @@ import {
 import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home/Home";
 import Footer from "daisyui/components/footer";
+import Login from "../Pages/Login/Login";
 // import Banner from "../Pages/Home/Banner/Banner";
 
 
@@ -19,10 +20,10 @@ const router = createBrowserRouter([
             path: "/",
             element: <Home></Home>,
         },
-        // {
-        //     path: "/footer",
-        //     element: <Footer></Footer>
-        // },
+        {
+            path: "login",
+            element: <Login></Login>
+        },
         // {
         //     path: "/",
         //     element: 

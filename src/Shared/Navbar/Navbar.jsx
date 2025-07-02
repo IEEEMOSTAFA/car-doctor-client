@@ -184,7 +184,9 @@ const Navbar = () => {
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-40">
             <li><Link to="/profile">Profile</Link></li>
             <li><Link to="/settings">Settings</Link></li>
+            <li><Link to="/login">Login</Link></li>
             <li><button>Logout</button></li>
+            {/* <li><button>Login</button></li> */}
           </ul>
         </div>
       </div>
