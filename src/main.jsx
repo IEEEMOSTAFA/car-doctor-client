@@ -10,13 +10,16 @@ import {
 import React from "react";
 import ReactDOM from "react-dom/client";
 import router from './Routes/Routes.jsx';
+import AuthProviders from './providers/AuthProviders.jsx';
 
 
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
   <div className="max-w-screen-xl mx-auto">
-    <RouterProvider router={router} />
+    <AuthProviders>
+      <RouterProvider router={router} />
+    </AuthProviders>
   </div>
 
 );

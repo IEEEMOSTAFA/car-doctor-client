@@ -49,9 +49,11 @@
 
 import React from 'react';
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+
 
 const ServiceCard = ({ service }) => {
-    const { title, img, price } = service;
+    const {_id, title, img, price } = service;
 
     return (
         <div className="card bg-base-100 w-full shadow-md border hover:shadow-lg transition">
@@ -64,7 +66,10 @@ const ServiceCard = ({ service }) => {
                 <div className='flex justify-between items-center mt-4'>
                     <div className="text-lg font-bold text-[#FF3811] mt-2">${price}</div>
                     <div>
-                        <FaLongArrowAltRight className="text-[#FF3811] text-2xl" />
+                        <Link to={`/checkout/${_id}`} className="flex items-center text-[#FF3811] hover:text-[#FF3811] transition">
+                            <FaLongArrowAltRight className="text-[#FF3811] text-2xl" />
+                        </Link>
+
                         {/* <p>Icon</p> */}
                     </div>
                 </div>

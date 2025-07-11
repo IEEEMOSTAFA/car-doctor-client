@@ -6,39 +6,45 @@ import { IoLogoLinkedin } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2';
-const Login = () => {
-    const { signIn } = useContext(AuthContext);
 
-    const handleLogin = (event) => {
+
+
+
+
+const SignUp = () => {
+    const { createUser } = useContext(AuthContext);
+
+    const handleSignUP = (event) => {
         event.preventDefault();
         const form = event.target;
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
 
-        signIn(email, password)
+        console.log(name, email, password);
+
+        createUser(email, password)
             .then(result => {
                 const user = result.user;
-
-                console.log('Logged in user:', user);
-                // alert('Login successful!');
-                Swal.fire({
-                    title: "Login successful!",
-                    icon: "success",
-                    draggable: true
-                });
+                console.log(user);
+                
+                  Swal.fire({
+                                     title: "User created successfully!",
+                                     icon: "success",
+                                     draggable: true
+                                 });
                 form.reset();
-                // Optionally redirect or show success message
             })
             .catch(error => {
-                console.error('Login error:', error);
-                // Optionally show error message to user
-                // alert('Login failed. Please check your credentials.');
+                console.error('Error creating user:', error);
+                
                 Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Login failed. Please check your credentials.",
-                    footer: '<a href="#">Why do I have this issue?</a>'
-                });
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Failed to create user! Please try again.",
+                                    footer: '<a href="#">Why do I have this issue?</a>'
+                                });
+                // Handle error (e.g., show a message to the user)
             });
     };
 
@@ -48,15 +54,29 @@ const Login = () => {
 
                 {/* Image Section */}
                 <div className="w-full lg:w-1/2 mr-12 flex justify-center">
-                    <img src={loginImg} alt="Login Illustration" className="w-80 md:w-96 rounded-lg shadow-lg" />
+                    <img src={loginImg} alt="Sign Up Illustration" className="w-80 md:w-96 rounded-lg shadow-lg" />
                 </div>
 
                 {/* Form Section */}
                 <div className="card w-full max-w-sm bg-base-100 shadow-xl">
                     <div className="card-body">
-                        <h2 className="text-3xl font-bold text-center text-[#FF3811]">Login</h2>
+                        <h2 className="text-3xl font-bold text-center text-[#FF3811]">Sign Up</h2>
 
-                        <form onSubmit={handleLogin}>
+                        <form onSubmit={handleSignUP}>
+                            {/* Name Field */}
+                            <div className="form-control mt-4">
+                                <label htmlFor="name" className="label">
+                                    <span className="label-text">Name</span>
+                                </label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    name='name'
+                                    placeholder="Enter your name"
+                                    className="input input-bordered"
+                                    required
+                                />
+                            </div>
                             {/* Email Field */}
                             <div className="form-control mt-4">
                                 <label htmlFor="email" className="label">
@@ -90,12 +110,12 @@ const Login = () => {
                                 </label>
                             </div>
 
-                            {/* Login Button */}
+                            {/* Sign Up Button */}
                             <div className="form-control mt-6">
-                                <button type="submit" className="btn bg-[#FF3811] w-full hover:bg-[#d4320f] transition-colors duration-200">Login</button>
+                                <button type="submit" className="btn bg-[#FF3811] w-full hover:bg-[#d4320f] transition-colors duration-200">Sign Up</button>
                             </div>
 
-                            {/* Signup Prompt */}
+                            {/* Social Signup */}
                             <p className="text-center text-[#737373] text-sm mt-4">
                                 or sign up with
                             </p>
@@ -107,7 +127,7 @@ const Login = () => {
                             </div>
                             <div>
                                 <p className="text-center text-[#737373] text-sm mt-4">
-                                    New to Doctor? <Link to="/signUp" className="link link-hover text-[#FF3811] ">Sign Up</Link>
+                                    Already have an account? <Link to="/login" className="link link-hover text-[#FF3811] ">Login</Link>
                                 </p>
                             </div>
                         </form>
@@ -119,4 +139,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
