@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../providers/AuthProviders';
-
+import Swal from 'sweetalert2';
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
@@ -13,6 +13,77 @@ const Bookings = () => {
         .catch(error => console.error("Error fetching bookings:", error));
     }
   }, [user]);
+
+
+
+
+
+  
+
+const handleDelete = id => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to delete this booking!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`http://localhost:5000/checkout/${id}`, {
+        method: 'DELETE'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.deletedCount > 0) {
+            Swal.fire('Deleted!', 'Booking has been deleted.', 'success');
+            setBookings(bookings.filter(booking => booking._id !== id));
+          }
+        });
+    }
+  });
+};
+
+const handleUpdate = id => {
+  Swal.fire({
+    title: 'Update Booking',
+    html:
+      `<input id="date" type="text" class="swal2-input" placeholder="New Date">` +
+      `<input id="message" type="text" class="swal2-input" placeholder="New Message">`,
+    focusConfirm: false,
+    preConfirm: () => {
+      const date = document.getElementById('date').value;
+      const message = document.getElementById('message').value;
+      return { date, message };
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`http://localhost:5000/checkout/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(result.value)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.modifiedCount > 0) {
+            Swal.fire('Updated!', 'Booking updated successfully.', 'success');
+            // Refresh bookings
+            const updatedBookings = bookings.map(booking => {
+              if (booking._id === id) {
+                return { ...booking, ...result.value };
+              }
+              return booking;
+            });
+            setBookings(updatedBookings);
+          }
+        });
+    }
+  });
+};
+
 
   return (
     <div className="p-6">
@@ -30,11 +101,13 @@ const Bookings = () => {
                 <th>Amount</th>
                 <th>Message</th>
                 <th>Image</th>
+                <th>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {bookings.map((booking, index) => (
-                <tr key={index}>
+                <tr key={booking._id}>
                   <td>{index + 1}</td>
                   <td className="font-bold text-base">{booking.serviceTitle}</td>
                   <td>{booking.date}</td>
@@ -47,9 +120,24 @@ const Bookings = () => {
                       </div>
                     </div>
                   </td>
+                  <td>
+                    <button
+                      onClick={() => handleUpdate(booking._id)}
+                      className="btn btn-sm btn-info mr-2"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(booking._id)}
+                      className="btn btn-sm btn-error"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
+
             {/* table footer */}
             <tfoot>
               <tr className="text-sm font-semibold bg-base-200">
