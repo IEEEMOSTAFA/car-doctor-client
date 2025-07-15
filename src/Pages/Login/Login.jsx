@@ -1,13 +1,17 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import loginImg from '../../assets/images/login/login.svg';
 import { FaFacebook } from "react-icons/fa";
 import { IoLogoLinkedin } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+
 const Login = () => {
     const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -15,37 +19,52 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
+
+
+
         signIn(email, password)
             .then(result => {
-                const user = result.user;
+                const loggedInUser = result.user;
+                console.log('Logged in user:', loggedInUser);
 
-                console.log('Logged in user:', user);
-                // alert('Login successful!');
+                const user = { email }
+
                 Swal.fire({
                     title: "Login successful!",
                     icon: "success",
                     draggable: true
                 });
+
                 form.reset();
-                // Optionally redirect or show success message
+                // Redirect to previous location or home
+
+
+                // Get Access Token
+                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.success) {
+                            navigate(location.state?.from || '/', { replace: true });
+                        }
+
+                    })
+
             })
             .catch(error => {
                 console.error('Login error:', error);
-                // Optionally show error message to user
-                // alert('Login failed. Please check your credentials.');
+                const errorMessage = error.response?.data?.message || error.message;
                 Swal.fire({
                     icon: "error",
-                    title: "Oops...",
-                    text: "Login failed. Please check your credentials.",
-                    footer: '<a href="#">Why do I have this issue?</a>'
+                    title: "Login Failed",
+                    text: errorMessage,
                 });
             });
+
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
             <div className="hero-content flex-col lg:flex-row gap-10 w-full max-w-5xl">
-
                 {/* Image Section */}
                 <div className="w-full lg:w-1/2 mr-12 flex justify-center">
                     <img src={loginImg} alt="Login Illustration" className="w-80 md:w-96 rounded-lg shadow-lg" />
@@ -57,7 +76,6 @@ const Login = () => {
                         <h2 className="text-3xl font-bold text-center text-[#FF3811]">Login</h2>
 
                         <form onSubmit={handleLogin}>
-                            {/* Email Field */}
                             <div className="form-control mt-4">
                                 <label htmlFor="email" className="label">
                                     <span className="label-text">Email</span>
@@ -72,7 +90,6 @@ const Login = () => {
                                 />
                             </div>
 
-                            {/* Password Field */}
                             <div className="form-control mt-4">
                                 <label htmlFor="password" className="label">
                                     <span className="label-text">Password</span>
@@ -90,12 +107,10 @@ const Login = () => {
                                 </label>
                             </div>
 
-                            {/* Login Button */}
                             <div className="form-control mt-6">
                                 <button type="submit" className="btn bg-[#FF3811] w-full hover:bg-[#d4320f] transition-colors duration-200">Login</button>
                             </div>
 
-                            {/* Signup Prompt */}
                             <p className="text-center text-[#737373] text-sm mt-4">
                                 or sign up with
                             </p>
@@ -113,7 +128,6 @@ const Login = () => {
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     );

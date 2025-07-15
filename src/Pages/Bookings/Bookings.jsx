@@ -1,16 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
-
+ const url = `http://localhost:5000/checkout?email=${user.email}`
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/checkout?email=${user.email}`)
-        .then(res => res.json())
-        .then(data => setBookings(data))
-        .catch(error => console.error("Error fetching bookings:", error));
+
+      axios.get(url, { withCredentials: true })
+      .then(res =>{setBookings(res.data)})
+      // fetch(`http://localhost:5000/checkout?email=${user.email}`)
+      //   .then(res => res.json())
+      //   .then(data => setBookings(data))
+      //   .catch(error => console.error("Error fetching bookings:", error));
     }
   }, [user]);
 
@@ -32,7 +36,9 @@ const handleDelete = id => {
   }).then((result) => {
     if (result.isConfirmed) {
       fetch(`http://localhost:5000/checkout/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials: 'include'
+        
       })
         .then(res => res.json())
         .then(data => {
@@ -61,6 +67,7 @@ const handleUpdate = id => {
     if (result.isConfirmed) {
       fetch(`http://localhost:5000/checkout/${id}`, {
         method: 'PATCH',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },

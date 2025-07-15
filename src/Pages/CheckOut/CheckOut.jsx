@@ -37,6 +37,7 @@ const CheckOut = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include', // ✅ Add this line
             body: JSON.stringify(order),
         })
             .then(res => res.json())
