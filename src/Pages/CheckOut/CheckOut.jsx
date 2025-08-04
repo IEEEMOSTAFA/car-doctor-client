@@ -3,6 +3,12 @@ import { useLoaderData } from 'react-router-dom';
 import checkoutImg from '../../assets/images/checkout/checkout.png';
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2'
+// app.use(cors({
+//   origin: 'http://localhost:5174',
+//   credentials: true,
+// }));
+
+
 const CheckOut = () => {
     const service = useLoaderData();
     const { user } = useContext(AuthContext);
@@ -29,7 +35,7 @@ const CheckOut = () => {
         };
 
         console.log(order);
-        form.reset();
+        // form.reset();
 
         // send data to the backend
         fetch('http://localhost:5000/checkout', {
