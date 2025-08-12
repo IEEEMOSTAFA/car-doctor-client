@@ -141,6 +141,7 @@ const Navbar = () => {
             <li><Link to="/profile">Profile</Link></li>
 
             {!user && <li><Link to="/login">Login</Link></li>}
+            {!user && <li><Link to="/signUp">SignUp</Link></li>}
             {user && <div> <li><button onClick={handleLogOut}>Logout</button></li><Link to="/bookings">My Bookings</Link>
             </div>}
           </ul>

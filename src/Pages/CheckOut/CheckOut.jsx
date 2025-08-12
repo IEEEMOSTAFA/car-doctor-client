@@ -3,7 +3,15 @@ import { useLoaderData } from 'react-router-dom';
 import checkoutImg from '../../assets/images/checkout/checkout.png';
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2'
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+// app.use(cors({
+//   origin: 'http://localhost:5174',
+//   credentials: true,
+// }));
+
+>>>>>>> 778e527d0e5f9798d17bdffb339be4c00da1b8de
 
 const CheckOut = () => {
     const service = useLoaderData();
@@ -31,7 +39,7 @@ const CheckOut = () => {
         };
 
         console.log(order);
-        form.reset();
+        // form.reset();
 
         // send data to the backend
         fetch('http://localhost:5000/checkout', {

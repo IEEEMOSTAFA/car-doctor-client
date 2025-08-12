@@ -5,9 +5,11 @@ import axios from 'axios';
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
- const url = `http://localhost:5000/checkout?email=${user.email}`
+//  const url = `http://localhost:5000/checkout?email=${user.email}`
   useEffect(() => {
     if (user?.email) {
+      const url = `http://localhost:5000/checkout?email=${user.email}`;
+
 
       axios.get(url, { withCredentials: true })
       .then(res =>{setBookings(res.data)})
