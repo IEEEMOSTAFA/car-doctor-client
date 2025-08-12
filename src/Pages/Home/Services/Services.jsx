@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import ServiceCard from './ServiceCard';
+import useServices from '../../../hooks/useServices';
 
 const Services = () => {
-    const [services, setServices] = useState([]);
 
-    useEffect(() => {
-        fetch('http://localhost:5000/services')
-            .then(res => res.json())
-            .then(data => setServices(data));
-    }, []);
+    const services = useServices();
+    // const [services, setServices] = useState([]);
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/services')
+    //         .then(res => res.json())
+    //         .then(data => setServices(data));
+    // }, []);
 
     return (
         <div className="py-16 px-4 max-w-screen-xl mx-auto">

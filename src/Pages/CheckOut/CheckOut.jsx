@@ -3,6 +3,8 @@ import { useLoaderData } from 'react-router-dom';
 import checkoutImg from '../../assets/images/checkout/checkout.png';
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2'
+import axios from 'axios';
+
 const CheckOut = () => {
     const service = useLoaderData();
     const { user } = useContext(AuthContext);
@@ -37,9 +39,16 @@ const CheckOut = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            credentials: 'include', // ✅ Add this line
+            
             body: JSON.stringify(order),
+            credentials: 'include', // ✅ Add this line
         })
+            // axios.post('http://localhost:5000/checkout', order, {
+            //     withCredentials: true // ✅ এই লাইনটা দিলে cookie যাবে
+            // });
+
+
+
             .then(res => res.json())
             .then(data => {
                 if (data.insertedId) {
