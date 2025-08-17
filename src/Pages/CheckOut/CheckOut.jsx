@@ -3,20 +3,22 @@ import { useLoaderData } from 'react-router-dom';
 import checkoutImg from '../../assets/images/checkout/checkout.png';
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2'
-<<<<<<< HEAD
-import axios from 'axios';
-=======
-// app.use(cors({
-//   origin: 'http://localhost:5174',
-//   credentials: true,
-// }));
+// import useAxiosSecure from '../../hooks/useAxiosSecure';
+// <<<<<<< HEAD
+// import axios from 'axios';
+// =======
+// // app.use(cors({
+// //   origin: 'http://localhost:5174',
+// //   credentials: true,
+// // }));
 
->>>>>>> 778e527d0e5f9798d17bdffb339be4c00da1b8de
+// >>>>>>> 778e527d0e5f9798d17bdffb339be4c00da1b8de
 
 const CheckOut = () => {
     const service = useLoaderData();
     const { user } = useContext(AuthContext);
     const { price, title, img } = service || {};
+    // const axiosSecure = useAxiosSecure();
 
 
     const handleCheckoutService = (event) => {
