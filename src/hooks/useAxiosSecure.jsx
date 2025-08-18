@@ -1,68 +1,3 @@
-// import axios from 'axios';
-// import { useContext, useEffect } from 'react';
-// import { AuthContext } from '../providers/AuthProviders';
-// import Swal from 'sweetalert2'
-// import { useNavigate } from 'react-router-dom';
-// const axiosSecure = axios.create({
-//     baseURL: 'http://localhost:5000',
-//     withCredentials: true
-// });
-
-// const useAxiosSecure = () => {
-//     // const {logOut} = useAuth()
-//     const {logOut} = useContext(AuthContext);
-//     const navigate = useNavigate();
-
-//     useEffect(() => {
-//         const interceptor = axiosSecure.interceptors.response.use(
-//             (res) => res,
-//             (error) => {
-//                 console.log('Error response is :', error.response);
-//                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-//                     console.log('Logout user');
-//                     // Optionally, handle logout or redirect here
-//                     logOut()
-//                         .then(() => {
-//                             navigate('/login');
-                            
-//                         })
-//                         .catch( error => {
-//                                 console.log(error);
-//                             })
-
-//                 }
-//                 return Promise.reject(error);
-//             }
-//         );
-
-//         // Cleanup interceptor on unmount
-//         return () => {
-//             axiosSecure.interceptors.response.eject(interceptor);
-//         };
-//     }, []);
-
-//     return axiosSecure;
-// };
-
-// export default useAxiosSecure;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
@@ -71,7 +6,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://car-doctor-server-plig.onrender.com',
     withCredentials: true
 });
 

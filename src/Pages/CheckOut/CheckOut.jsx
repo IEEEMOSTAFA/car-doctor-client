@@ -44,7 +44,7 @@ const CheckOut = () => {
         // form.reset();
 
         // send data to the backend
-        fetch('http://localhost:5000/checkout', {
+        fetch('https://car-doctor-server-plig.onrender.com/checkout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
